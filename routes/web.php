@@ -1,8 +1,11 @@
 <?php
 
-use App\Helpers\Telegram;
+// use App\Helpers\Telegram;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Http;
+use DefStudio\Telegraph\Telegram;
+use App\Http\Controllers\BotController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -14,4 +17,4 @@ use Illuminate\Support\Facades\Http;
 |
 */
 
-Route::get('/', [Telegram::class, 'sendMessage']);
+Route::get('/telegram',[BotController::class,'sendHello']);
