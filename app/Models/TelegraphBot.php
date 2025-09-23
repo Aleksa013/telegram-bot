@@ -2,10 +2,12 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use DefStudio\Telegraph\Models\TelegraphBot as BaseModel;
 
-class TelegraphBot extends Model
+class TelegraphBot extends BaseModel
 {
-    use HasFactory;
+    protected $table = 'telegraph_bots';
+
+    /** @var \DefStudio\Telegraph\Models\TelegraphBot $telegraphBot */
+
 }
