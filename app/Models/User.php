@@ -21,8 +21,8 @@ class User extends Authenticatable
         'name' ,
         'telegram_id',
         'chat_telegram_id',
-        // 'email',
-        // 'password',
+        'email',
+        'password',
         // 'state',
         // 'phone',
         // 'addresses',
@@ -49,5 +49,8 @@ class User extends Authenticatable
         'addresses' => 'array',
     ];
 
-
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
+    }
 }

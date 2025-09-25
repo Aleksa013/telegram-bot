@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Http;
 use DefStudio\Telegraph\Telegram;
 use App\Http\Controllers\BotController;
+use App\Http\Controllers\AdminController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -17,4 +19,6 @@ use App\Http\Controllers\BotController;
 |
 */
 
-Route::get('/telegram',[BotController::class,'sendHello']);
+
+
+Route::get('/telegram',[AdminController::class,'index']);
