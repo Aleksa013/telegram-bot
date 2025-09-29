@@ -1,4 +1,9 @@
 {
     "navigation": ["Home", "About us", "Menu", "Contacts"],
-    "social": ["Instagram", "Facebook", "Telegram"]
+    "social": ["Instagram", "Facebook", "Telegram"],
+    "welcome": {
+        "header": "Welcome to",
+        "text": "The people, food and the prime locations make the perfect place good friends & family to come together and have great time.",
+        "textButton": "View Menu"
+    }
 }
