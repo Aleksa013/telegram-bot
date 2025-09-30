@@ -13,7 +13,7 @@ defineProps({
 </script>
 
 <template>
-    <container class="px-10 py-[1.5rem] max-w-[95%] mx-auto flex flex-col">
+    <div class="container px-10 py-[1.5rem] max-w-[95%] mx-auto flex flex-col">
         <Head title="Welcome" />
         <Header />
         <WelcomeSection
@@ -21,7 +21,7 @@ defineProps({
             :text="welcome.text"
             :button-text="welcome.textButton"
         />
-    </container>
+    </div>
 </template>
 
 <style></style>

@@ -1,5 +1,6 @@
 <script setup lang="js">
 import PrimaryButton from './PrimaryButton.vue';
+import { router } from '@inertiajs/vue3'
 const content = defineProps({
     header: String,
     text: String,
@@ -7,7 +8,7 @@ const content = defineProps({
 })
 
 const goToMenu = ()=> {
-    return route('menu')
+    router.get(route('menu'))
 }
 </script>
 
