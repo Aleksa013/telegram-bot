@@ -2,6 +2,7 @@
 
 namespace App\Http\Webhooks;
 
+use App\Models\Dish;
 use DefStudio\Telegraph\Handlers\WebhookHandler as DefWebhookHandler;
 use Illuminate\Support\Stringable;
 use Illuminate\Support\Facades\Log;
@@ -10,7 +11,8 @@ use App\Models\TelegraphBot;
 use DefStudio\Telegraph\Keyboard\Button;
 use DefStudio\Telegraph\Keyboard\Keyboard;
 use App\Models\User;
-
+use App\Models\Drink;
+use App\Models\Pizza;
 
 class WebhookHandler extends DefWebhookHandler
 {
@@ -102,10 +104,12 @@ class WebhookHandler extends DefWebhookHandler
         }
     }
 
-    public function register(){
+    public function register()
+    {
         $telegraphBot = TelegraphBot::find(3);
         $telegraphBot->registerCommands([
         '/start' => 'for start conversation',
+        '/menu' => 'for order',
         '/help' =>  'what can I do?',
         '/settings' => 'your settings',
         '/info' => 'Most important info'
@@ -119,14 +123,14 @@ class WebhookHandler extends DefWebhookHandler
         if($user) {
             $this->chat->message('Hello again, '.$user->name)
                 ->keyboard(Keyboard::make()->buttons([
-                    Button::make('Review')->action('review'),
-                    Button::make('See menu')->action('showMenu'),
+                    Button::make('📒 Review')->action('review'),
+                    Button::make('🍽️ See menu')->action('menu'),
                 ]))->send();
         } else {
            $this->chat->message('Hello!')->
             keyboard(Keyboard::make()->buttons([
-                Button::make('Register')->action('registerUser'),
-                Button::make('See menu')->action('showMenu'),
+                Button::make('✒️ Register')->action('registerUser'),
+                Button::make('🍽️ See menu')->action('menu'),
             ]))->send();
 
             $fromArray = $this->message->from()->toArray();
@@ -152,58 +156,58 @@ class WebhookHandler extends DefWebhookHandler
     public function settings(){
         $this->chat->message('Your data')->
         keyboard(Keyboard::make()->buttons([
-                Button::make('Phone')->action('addPhone'),
-                Button::make('Address')->action('addAddress'),
+                Button::make('📱 Phone')->action('addPhone'),
+                Button::make('🏠 Address')->action('addAddress'),
         ]))->send();
     }
 
     public function registerUser(){
            $this->chat->message('OK! Let`s start! I need your phone and address')->
             keyboard(Keyboard::make()->buttons([
-                Button::make('Phone')->action('addPhone'),
-                Button::make('Address')->action('addAddress'),
+                Button::make('📱 Phone')->action('addPhone'),
+                Button::make('🏠 Address')->action('addAddress'),
             ]))->send();
     }
 
-        public function addPhone(){
-            $user = User::where('telegram_id', $this->chat->chat_id)->first();;
-            Log::error($user->state);
-            if($user) {
-            $user->state = 'waiting_phone';
+    public function addPhone(){
+        $user = User::where('telegram_id', $this->chat->chat_id)->first();;
+        Log::error($user->state);
+        if($user) {
+        $user->state = 'waiting_phone';
+        $user->save();
+         $this->chat->message("Please, get your phone number:")->send();
+        }else{
+            $this->reply('Something went wrong!');
+        }
+    }
+
+
+    public function addAddress(){
+        $this->chat->message("Please, choice your city.")
+        ->keyboard(
+            Keyboard::make()->buttons([
+                Button::make('Burgas')->action('addStreet')->param('city', 'Burgas'),
+                Button::make('Varna')->action('addStreet')->param('city', 'Varna'),
+                Button::make('Sofia')->action('addStreet')->param('city', 'Sofia'),
+                ]
+            )
+        )->send();
+
+    }
+
+    public function addStreet(){
+        $city = $this->data->get('city');
+        $user = User::where('telegram_id', $this->chat->chat_id)->first();;
+        if($user) {
+            $user->state = 'waiting_address';
+            $user->addresses = ['city'=>$city];
             $user->save();
-             $this->chat->message("Please, get your phone number:")->send();
-            }else{
-                $this->reply('Something went wrong!');
-            }
+        } else {
+            $this->reply('Something went wrong!');
         }
+        $this->chat->message("Please, Enter the address")->send();
 
-
-        public function addAddress(){
-            $this->chat->message("Please, choce your city.")
-            ->keyboard(
-                Keyboard::make()->buttons([
-                    Button::make('Burgas')->action('addStreet')->param('city', 'Burgas'),
-                    Button::make('Varna')->action('addStreet')->param('city', 'Varna'),
-                    Button::make('Sofia')->action('addStreet')->param('city', 'Sofia'),
-                    ]
-                )
-            )->send();
-
-        }
-
-        public function addStreet(){
-            $city = $this->data->get('city');
-             $user = User::where('telegram_id', $this->chat->chat_id)->first();;
-            if($user) {
-                $user->state = 'waiting_address';
-                $user->addresses = ['city'=>$city];
-                $user->save();
-            } else {
-                $this->reply('Something went wrong!');
-            }
-            $this->chat->message("Please, Enter the address")->send();
-
-        }
+    }
 
 
     public function help():void{
@@ -220,9 +224,9 @@ class WebhookHandler extends DefWebhookHandler
                 <i>Name:</i> {$name}
                 <i>Phone:</i> {$phone}
                 <i>Address:</i> {$address}")
-                ->keyboard( Keyboard::make()->buttons([
-                    Button::make('Yes')->action('save'),
-                    Button::make('No')->action('changeInfo'),
+                ->keyboard( Keyboard::make()->row([
+                    Button::make('✅ Yes')->action('save'),
+                    Button::make('⛔ No')->action('changeInfo'),
                 ]))->send();
     }
 
@@ -245,5 +249,44 @@ class WebhookHandler extends DefWebhookHandler
             }else{
                 $this->reply('Something went wrong!');
             }
+    }
+
+    public function menu()
+    {
+        $this->chat->message('What do you want to order?')
+        ->keyboard(Keyboard::make()->buttons([
+        Button::make("🥤 Drink")->action("choiceDrink"),
+        Button::make("🍕 Pizza")->action("choicePizza"),
+        Button::make("🍝 Dishes")->action('choiceDishes'),
+        Button::make("📋 Go to site")->url('http://127.0.0.1:8000/'),
+    ])->chunk(2))->send();
+    }
+
+    public function choiceDrink() {
+        $drink = Drink::where('id', 1)->first();
+        $answer = $this->chat->photo('../resources/assets/img/images/'.$drink->image_path)->send();
+        Log::error($answer);
+    }
+
+        public function choicePizza() {
+        $pizza = Pizza::where('id', 1)->first();
+        $answer = $this->chat->
+            photo('../resources/assets/img/images/'.$pizza->image_path)->
+            html("
+            <b>Ingredients: </b>{$pizza->ingredients}
+            <b>Price: </b> {$pizza->price}")->
+            keyboard(Keyboard::make()->row([
+                        Button::make("⬅️ Prev")->action("choiceDrink"),
+                        Button::make("🍕 I want it!")->action("choicePizza"),
+                        Button::make("➡️ Next")->action('choiceDishes'),
+            ]))->
+            send();
+        Log::error($answer);
+    }
+
+        public function choiceDishes() {
+        $dish = Dish::where('id', 1)->first();
+        $answer = $this->chat->photo('../resources/assets/img/images/'.$dish->image_path)->send();
+        Log::error($answer);
     }
 }
