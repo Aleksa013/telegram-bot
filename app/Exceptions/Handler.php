@@ -2,11 +2,16 @@
 
 namespace App\Exceptions;
 
+use App\Helpers\Telegram;
+use Illuminate\Contracts\Container\Container;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
+use Illuminate\Support\Facades\Http;
 
 class Handler extends ExceptionHandler
 {
+
+
     /**
      * A list of exception types with their corresponding custom log levels.
      *
@@ -35,6 +40,11 @@ class Handler extends ExceptionHandler
         'password',
         'password_confirmation',
     ];
+
+    public function report(Throwable $e)
+    {
+
+    }
 
     /**
      * Register the exception handling callbacks for the application.

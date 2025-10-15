@@ -11,16 +11,22 @@ use Laravel\Sanctum\HasApiTokens;
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
-
+    protected $table = 'users';
     /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
+        'name' ,
+        'telegram_id',
+        'chat_telegram_id',
         'email',
         'password',
+        // 'state',
+        // 'phone',
+        // 'addresses',
+        // 'payment_methods',
     ];
 
     /**
@@ -40,5 +46,11 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'addresses' => 'array',
     ];
+
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
+    }
 }

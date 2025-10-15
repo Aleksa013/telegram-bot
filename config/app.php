@@ -185,7 +185,7 @@ return [
         /*
          * Package Service Providers...
          */
-
+        DefStudio\Telegraph\TelegraphServiceProvider::class,
         /*
          * Application Service Providers...
          */
