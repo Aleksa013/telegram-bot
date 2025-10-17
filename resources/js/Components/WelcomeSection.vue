@@ -30,7 +30,7 @@ const goToMenu = ()=> {
         </div>
         <img
             src="../../assets/img/images/welcome-bg.png"
-            alt="beautufull place"
+            alt="beautiful place"
         />
     </section>
 </template>

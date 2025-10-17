@@ -5,5 +5,14 @@
         "header": "Welcome to Restaurant",
         "text": "The people, food and the prime locations make the perfect place good friends & family to come together and have great time.",
         "textButton": "View Menu"
+    },
+    "menuSection": {
+        "card": {
+            "header": "Try Our Special dishes",
+            "description": "Every time you perfectly dine with us, it should happy for great inspired food in an environment designed with individual touches unique to the local area.",
+            "picturePath": "http://127.0.0.1:5173/resources/assets/img/images/main/menu-main.jpg",
+            "textButton": "See all dishes",
+            "name": "Italian dishes"
+        }
     }
 }
