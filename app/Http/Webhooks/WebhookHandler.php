@@ -15,7 +15,10 @@ use App\Models\Drink;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Pizza;
+use App\Models\Product;
 use App\Services\ProductService;
+use Carbon\Exceptions\Exception;
+use Throwable;
 
 class WebhookHandler extends DefWebhookHandler
 {
@@ -52,17 +55,21 @@ class WebhookHandler extends DefWebhookHandler
         }
         if($user && $user->state == 'waiting_address'){
             $city = $user->addresses['city'];
-            Log::info($city.$user->state);
+             $this->reply($city);
             $user->addresses = [
                     'city'=> $city,
                     'address'=> $text,
                 ];
             $user->save();
-            Log::info($user->addresses);
+
+            $listOfAddresses = "<b>Your address :</b>
+                                    <b>City</b>:{$city}
+                                    <b>Address</b>:{$user->addresses['address']}
+                                    ";
+
+
             $this->chat
-            ->html("<b>Your address:</b>
-                    <b>City</b>:{$user->addresses['city']}
-                    <b>Address</b>:{$user->addresses['address']}")
+            ->html($listOfAddresses)
             ->keyboard(
                 Keyboard::make()->buttons([
                     Button::make('Yes')->action('save'),
@@ -203,9 +210,18 @@ class WebhookHandler extends DefWebhookHandler
         $city = $this->data->get('city');
         $user = User::where('telegram_id', $this->chat->chat_id)->first();
         if($user) {
+            Log::debug('Before', [
+    'addresses_type' => gettype($user->addresses),
+    'addresses_value' => $user->addresses,
+    'casts' => isset($user->casts) ? $user->casts : null,
+]);
+            Log::error($city);
             $user->state = 'waiting_address';
-            $user->addresses = ['city'=>$city];
+            // $user->addresses = [];
+            $user->addresses = ['city' => $city];
+            // $user->addresses[] = [count($user->addresses)=>['city'=>$city]];
             $user->save();
+            Log::error($user);
         } else {
             $this->reply('Something went wrong!');
         }
@@ -384,27 +400,45 @@ class WebhookHandler extends DefWebhookHandler
         $order->save();
 
 
-        $listOfProduct = "";
+        $listOfProduct = "<b>Your order: </b>";
         foreach($order->items as $item){
-            $everyProduct = OrderItem::where('id', $item)->where('order_id', $order->id)->get();
-            Log::error($everyProduct);
-            if(count($everyProduct)>1){
-                $product = $everyProduct[0];
-                $count = 0;
-                foreach($everyProduct as $pr){
-                    $count += $pr->quantity;
-                }
-                $product->quantity = $count;
-                Log::info($count);
-            } else {
-                $product = $everyProduct;
-            }
-            $model = $resolver->getModel($product->type);
-            $name = $model::where('id', $product->id)->first();
-            Log::info($name);
-            $listOfProduct = $listOfProduct . "<b>{$product->type} : {$name->name}<b> - {$product->count} items" ;
-            Log::info($listOfProduct);
+            $indexOfProduct = OrderItem::find($item)->product_id;
+            Log::info($item);
+            $product = $resolver->find(OrderItem::find($item)->product_type, $indexOfProduct);
+            $type = OrderItem::find($item)->product_type;
+            $quantity = OrderItem::find($item)->quantity;
+
+            $listOfProduct .= "
+            <b>{$type} : {$product->name}</b> - {$quantity} items  " ;
         }
-        $this->chat->html("<b>Your order: </b>" . $listOfProduct)->send();
+
+        try{
+            $this->chat->html($listOfProduct . "
+            <b>Total price: </b> <i>{$order->total}</i>" )->
+            keyboard(Keyboard::make()->row([
+                Button::make('🏃🏻 Order')->action('checkAddress'),
+                Button::make('📝 Correct the Order')->action('CorrectOrder')
+                ]))->send();
+        }catch(\Exception $error){
+            Log::error($error);
+        }
+
+    }
+
+    public function checkAddress()
+    {
+        try{
+            $user = User::where('telegram_id',$this->chat->chat_id)->first();
+        $address = $user->getAddress();
+        Log::info($address);
+        $this->chat->html("<b>Your address: </b> " .($address?$address['address']: 'no address'))->
+            keyboard(Keyboard::make()->row([
+                Button::make('✅Yes')->action('saveOrder'),
+                Button::make("📝 I want change address")->action('addAddress')
+            ]))->send();
+        }catch(Throwable $error){
+            Log::error($error);
+        }
+
     }
 }

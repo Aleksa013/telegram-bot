@@ -2,6 +2,7 @@
 import { Head, Link } from "@inertiajs/vue3";
 import Header from "@/Components/Header.vue";
 import WelcomeSection from "@/Components/WelcomeSection.vue";
+import MenuSection from "@/Components/MenuSection.vue";
 import { welcome } from "./../constants/constants.json";
 
 defineProps({
@@ -21,6 +22,7 @@ defineProps({
             :text="welcome.text"
             :button-text="welcome.textButton"
         />
+        <MenuSection />
     </div>
 </template>
 
