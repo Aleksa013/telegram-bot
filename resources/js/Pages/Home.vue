@@ -23,6 +23,7 @@ defineProps({
             :button-text="welcome.textButton"
         />
         <MenuSection />
+        <ReviewSection />
     </div>
 </template>
 

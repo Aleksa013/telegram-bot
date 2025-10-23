@@ -14,5 +14,10 @@
             "textButton": "See all dishes",
             "name": "Italian dishes"
         }
+    },
+    "review": {
+        "header": "our clients say",
+        "description": "We love to hear from customers, so please leave a comment or say hello in an email.",
+        "rating": 5
     }
 }
