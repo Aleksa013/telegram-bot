@@ -9,10 +9,11 @@ const reviews = ref([]);
 onMounted(async () => {
     const { data } = await axios.get("http://127.0.0.1:8000/api/reviews");
     reviews.value = data;
+    console.log(reviews.value, "reviews");
 });
 </script>
 <template>
-    <section class="flex flex-col">
+    <section class="flex flex-col bg-dark_bg px-3 py-4">
         <span
             class="w-[5rem] py-2 border-t-2 border-b-2 border-primary_orange text-light_bg font-sans font-semibold"
             >Testimonial</span
@@ -25,10 +26,14 @@ onMounted(async () => {
         </p>
 
         <ReviewItem
-            v-for="review in props.reviews"
+            v-if="reviews.length > 0"
+            v-for="review in reviews"
             :key="review.id"
             :review="review"
             :user="user"
         />
+        <div v-else>
+            <p>No reviews found</p>
+        </div>
     </section>
 </template>

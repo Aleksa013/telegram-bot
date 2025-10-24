@@ -3,6 +3,7 @@ import { Head, Link } from "@inertiajs/vue3";
 import Header from "@/Components/Header.vue";
 import WelcomeSection from "@/Components/WelcomeSection.vue";
 import MenuSection from "@/Components/MenuSection.vue";
+import ReviewSection from "@/Components/ReviewSection.vue";
 import { welcome } from "./../constants/constants.json";
 
 defineProps({
