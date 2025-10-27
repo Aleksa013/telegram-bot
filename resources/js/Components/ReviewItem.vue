@@ -20,7 +20,9 @@ onMounted(async () => {
 });
 </script>
 <template>
-    <div class="flex flex-col w-1/4 min-h-60 bg-primary_gray px-4 py-5">
+    <div
+        class="flex flex-col justify-start align-top w-1/4 min-h-60 bg-primary_gray px-4 py-5 mx-4"
+    >
         <div class="flex border-b-2 border-dark_bg pt-2 pb-6">
             <img
                 :src="user.image ?? defaultData.avaPath"

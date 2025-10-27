@@ -28,7 +28,7 @@ onMounted(async () => {
 });
 </script>
 <template>
-    <section class="flex flex-col bg-dark_bg px-3 py-4">
+    <section class="flex flex-col bg-dark_bg p-12">
         <span
             class="w-[5rem] py-2 border-t-2 border-b-2 border-primary_orange text-light_bg font-sans font-semibold"
             >Testimonial</span
@@ -39,18 +39,19 @@ onMounted(async () => {
         >
             {{ review.header }}
         </h4>
-        <p class="w-auto my-3 font-serif text-[1.5em] text-light_bg">
+        <p class="w-auto my-3 font-serif text-[1.5em] text-light_bg mb-12">
             {{ review.description }}
         </p>
-
-        <ReviewItem
-            v-if="reviews.length > 0"
-            v-for="review in reviews"
-            :key="review.id"
-            :review="review"
-        />
-        <div v-else>
-            <p>No reviews found</p>
+        <div class="flex justify-evenly">
+            <ReviewItem
+                v-if="reviews.length > 0"
+                v-for="review in reviews"
+                :key="review.id"
+                :review="review"
+            />
+            <div v-else>
+                <p>No reviews found</p>
+            </div>
         </div>
     </section>
 </template>
