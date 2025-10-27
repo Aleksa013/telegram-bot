@@ -16,6 +16,7 @@ use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Pizza;
 use App\Models\Product;
+use App\Models\Review;
 use App\Services\ProductService;
 use Carbon\Exceptions\Exception;
 use Throwable;
@@ -32,6 +33,7 @@ class WebhookHandler extends DefWebhookHandler
     protected function handleChatMessage(Stringable $text): void
     {
         $user = User::where('telegram_id', $this->chat->chat_id)->first();
+        $review = Review::where('user_id', $user->id)->where('text', 'No text')->first();
         Log::error($user.'get text');
         if($user && $user->state == 'waiting_phone') {
             Log::error($user->state.'phone');
@@ -91,6 +93,9 @@ class WebhookHandler extends DefWebhookHandler
                     ]
                 )
             )->send();
+        }
+        if($review){
+            $this->leaveReviewText($review->id, $text);
         }
         $this->chat->message("Вы написали: {$text}");
     }
@@ -357,7 +362,6 @@ class WebhookHandler extends DefWebhookHandler
                 Button::make('⛔ No')->action("chooceProduct")->param('type', $type),
         ]))
         ->send();
-        Log::error($answer);
     }
 
     public function knowQuantity(ProductService $resolver,$id, $type){
@@ -396,7 +400,6 @@ class WebhookHandler extends DefWebhookHandler
     public function saveOrder(ProductService $resolver){
         $user = User::where('telegram_id',$this->chat->chat_id)->first();
         $order = Order::where('user_id', $user->id)->where('status', 'new')->first();
-        // $order->status = 'cooking';
         $order->save();
 
 
@@ -430,7 +433,7 @@ class WebhookHandler extends DefWebhookHandler
         try{
             $user = User::where('telegram_id',$this->chat->chat_id)->first();
         $address = $user->getAddress();
-        Log::info($address);
+
         $this->chat->html("<b>Your address: </b> " .($address?$address['address']: 'no address'))->
             keyboard(Keyboard::make()->row([
                 Button::make('✅Yes')->action('saveOrder'),
@@ -440,5 +443,34 @@ class WebhookHandler extends DefWebhookHandler
             Log::error($error);
         }
 
+    }
+
+    public function review(){
+        $this->chat->message('Please, leave a review (from 1 to 5 stars)')
+        ->keyboard(Keyboard::make()->row([
+            Button::make('1⭐')->action('leaveReview')->param('stars', 1),
+            Button::make('2⭐')->action('leaveReview')->param('stars', 2),
+            Button::make('3⭐')->action('leaveReview')->param('stars', 3),
+            Button::make('4⭐')->action('leaveReview')->param('stars', 4),
+            Button::make('5⭐')->action('leaveReview')->param('stars', 5),
+        ]))->send();
+
+    }
+
+    public function leaveReview($stars){
+        $user = User::where('telegram_id',$this->chat->chat_id)->first();
+        $review =Review::create([
+            'user_id' => $user->id,
+            'stars' => $stars,
+            'text' => 'No text',
+        ]);
+        $this->chat->message('What do you like most, '.$user->name.'?')->send();
+    }
+
+    public function leaveReviewText($review, $text){
+        $review = Review::find($review);
+        $review->text = $text;
+        $review->save();
+        $this->chat->message('Thank you for your review')->send();
     }
 }

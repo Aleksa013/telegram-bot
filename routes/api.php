@@ -21,3 +21,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::get('menu/{type}',[SiteController::class, 'getProductList']);
 Route::get('reviews',[SiteController::class, 'getReviews']);
+Route::get('review/{review}',[SiteController::class, 'getReview']);
+Route::get('user/{id}', [SiteController::class, 'getUser']);

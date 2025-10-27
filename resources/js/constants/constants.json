@@ -19,5 +19,8 @@
         "header": "our clients say",
         "description": "We love to hear from customers, so please leave a comment or say hello in an email.",
         "rating": 5
+    },
+    "defaultData": {
+        "avaPath": "http://127.0.0.1:5173/resources/assets/img/icons/ava_default.png"
     }
 }
