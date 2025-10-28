@@ -156,7 +156,7 @@ class WebhookHandler extends DefWebhookHandler
                 User::factory()->create([
                     'name'              => $name,
                     'telegram_id'       => $fromArray['id'],
-                    // 'chat_telegram_id'  => $chatID,
+                    'chat_telegram_id'  => $chatID,
                     'email'             => '',
                     'password'          => '',
                     'state'             => null,

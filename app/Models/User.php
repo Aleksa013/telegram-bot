@@ -23,10 +23,11 @@ class User extends Authenticatable
         'chat_telegram_id',
         'email',
         'password',
-        // 'state',
-        // 'phone',
-        // 'addresses',
-        // 'payment_methods',
+        'state',
+        'phone',
+        'addresses',
+        'payment_methods',
+        'avatar'
     ];
 
     /**
