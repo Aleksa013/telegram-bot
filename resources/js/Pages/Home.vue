@@ -4,6 +4,7 @@ import Header from "@/Components/Header.vue";
 import WelcomeSection from "@/Components/WelcomeSection.vue";
 import MenuSection from "@/Components/MenuSection.vue";
 import ReviewSection from "@/Components/ReviewSection.vue";
+import Vibe from "@/Components/Vibe.vue";
 import { welcome } from "./../constants/constants.json";
 
 defineProps({
@@ -25,6 +26,7 @@ defineProps({
         />
         <MenuSection />
         <ReviewSection />
+        <Vibe />
     </div>
 </template>
 

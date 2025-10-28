@@ -10,6 +10,7 @@ use Illuminate\Support\Str;
 use App\Models\TelegraphBot;
 use DefStudio\Telegraph\Keyboard\Button;
 use DefStudio\Telegraph\Keyboard\Keyboard;
+use DefStudio\Telegraph\Telegraph;
 use App\Models\User;
 use App\Models\Drink;
 use App\Models\Order;
@@ -27,7 +28,7 @@ class WebhookHandler extends DefWebhookHandler
     public function __construct()
     {
         Log::info('Correct');
-    parent::__construct();
+        parent::__construct();
     }
 
     protected function handleChatMessage(Stringable $text): void
@@ -133,8 +134,11 @@ class WebhookHandler extends DefWebhookHandler
     }
 
     public function start():void{
+        $telegraphBot = TelegraphBot::find(3);
+        $telegraph = app(Telegraph::class);
+        $bot = $telegraph->bot($telegraphBot->token);
         $chatID = $this->chat->chat_id;
-        $user = User::where('telegram_id', $this->chat->chat_id)->first();;
+        $user = User::where('telegram_id', $chatID)->first();
 
         if($user) {
             $this->chat->message('Hello again, '.$user->name)
@@ -163,8 +167,8 @@ class WebhookHandler extends DefWebhookHandler
                     'phone'             => '',
                     'addresses'         => [],
                     'payment_methods'   => 'cash',
+                    'avatar'            => ''
                 ]);
-
             }
         }
     }
@@ -197,7 +201,6 @@ class WebhookHandler extends DefWebhookHandler
         }
     }
 
-
     public function addAddress(){
         $this->chat->message("Please, choice your city.")
         ->keyboard(
@@ -216,15 +219,13 @@ class WebhookHandler extends DefWebhookHandler
         $user = User::where('telegram_id', $this->chat->chat_id)->first();
         if($user) {
             Log::debug('Before', [
-    'addresses_type' => gettype($user->addresses),
-    'addresses_value' => $user->addresses,
-    'casts' => isset($user->casts) ? $user->casts : null,
-]);
-            Log::error($city);
+            'addresses_type' => gettype($user->addresses),
+            'addresses_value' => $user->addresses,
+            'casts' => isset($user->casts) ? $user->casts : null,
+        ]);
+
             $user->state = 'waiting_address';
-            // $user->addresses = [];
             $user->addresses = ['city' => $city];
-            // $user->addresses[] = [count($user->addresses)=>['city'=>$city]];
             $user->save();
             Log::error($user);
         } else {
@@ -233,7 +234,6 @@ class WebhookHandler extends DefWebhookHandler
         $this->chat->message("Please, Enter the address")->send();
 
     }
-
 
     public function help():void{
         $this->chat->html('I can to learn you everything')->send();
@@ -276,15 +276,14 @@ class WebhookHandler extends DefWebhookHandler
             }
     }
 
-    public function menu()
-    {
+    public function menu(){
         $this->chat->message('What do you want to order?')
         ->keyboard(Keyboard::make()->buttons([
         Button::make("🥤 Drink")->action("chooceProduct")->param('type', 'drink'),
         Button::make("🍕 Pizza")->action("chooceProduct")->param('type', 'pizza'),
         Button::make("🍝 Dishes")->action('chooceProduct')->param('type', 'dish'),
         Button::make("📋 Go to site")->url('http://127.0.0.1:8000/'),
-    ])->chunk(2))->send();
+        ])->chunk(2))->send();
     }
 
     public function chooceProduct(ProductService $resolver,$type) {
@@ -348,20 +347,19 @@ class WebhookHandler extends DefWebhookHandler
             // $order->save();
             Log::info($order);
             } catch (\Exception $e) {
-    Log::error('Order creation failed: ' . $e->getMessage());
-}
+                Log::error('Order creation failed: ' . $e->getMessage());
+            }
 
         }
 
         $product = $resolver->find($type, $id);
 
-        $answer = $this->chat->message('You want to add to order')
+        $this->chat->message('You want to add to order')
         ->photo('../resources/assets/img/images/'.$product->image_path)
         ->keyboard(Keyboard::make()->row([
                 Button::make('✅ Yes')->action('knowQuantity')->param('id', $id)->param('type', $type),
                 Button::make('⛔ No')->action("chooceProduct")->param('type', $type),
-        ]))
-        ->send();
+        ]))->send();
     }
 
     public function knowQuantity(ProductService $resolver,$id, $type){
@@ -428,8 +426,7 @@ class WebhookHandler extends DefWebhookHandler
 
     }
 
-    public function checkAddress()
-    {
+    public function checkAddress(){
         try{
             $user = User::where('telegram_id',$this->chat->chat_id)->first();
         $address = $user->getAddress();
