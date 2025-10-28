@@ -134,9 +134,6 @@ class WebhookHandler extends DefWebhookHandler
     }
 
     public function start():void{
-        $telegraphBot = TelegraphBot::find(3);
-        $telegraph = app(Telegraph::class);
-        $bot = $telegraph->bot($telegraphBot->token);
         $chatID = $this->chat->chat_id;
         $user = User::where('telegram_id', $chatID)->first();
 
@@ -155,23 +152,46 @@ class WebhookHandler extends DefWebhookHandler
 
             $fromArray = $this->message->from()->toArray();
             $name = $fromArray['first_name'].' '.$fromArray['last_name'];
-            Log::info($chatID);
+            Log::info($fromArray);
             if(!$fromArray['is_bot']){
-                User::factory()->create([
-                    'name'              => $name,
-                    'telegram_id'       => $fromArray['id'],
-                    'chat_telegram_id'  => $chatID,
-                    'email'             => '',
-                    'password'          => '',
-                    'state'             => null,
-                    'phone'             => '',
-                    'addresses'         => [],
-                    'payment_methods'   => 'cash',
-                    'avatar'            => ''
-                ]);
+                try{
+                    $user = new User();
+
+                    $user->name = $name;
+                    $user->telegram_id = $fromArray['id'];
+                    $user->email = 'telegram_'.$name;
+                    $user->password = '';
+                    $user->state = null;
+                    $user->phone = '';
+                    $user->addresses = ['city'=>'', 'address'=>''];
+                    $user->payment_methods = 'cash';
+                    $user->avatar = '';
+
+                    $user->save();
+                                    Log::info($user);
+                    Log::info('$user');
+                } catch(Throwable $e){
+                     Log::error($e);
+                }
+
+
+
+                // User::factory()->create([
+                //     'name'              => $name,
+                //     'telegram_id'       => $fromArray['id'],
+                //     'chat_telegram_id'  => $chatID,
+                //     'email'             => '',
+                //     'password'          => '',
+                //     'state'             => null,
+                //     'phone'             => '',
+                //     'addresses'         => [],
+                //     'payment_methods'   => 'cash',
+                //     'avatar'            => ''
+                // ]);
+
+        }
             }
         }
-    }
 
     public function settings(){
         $this->chat->message('Your data')->
