@@ -20,12 +20,12 @@ onMounted(async () => {
 <template>
     <section class="flex flex-col items-center">
         <Label class="w-[5%]">Menu</Label>
-        <SectionsHeader class="text-dark_bg">{{
+        <SectionsHeader class="text-dark_bg text-[3em]">{{
             popularDishes.header
         }}</SectionsHeader>
-        <SectionsText class="w-1/2 text-center mb-10">{{
-            popularDishes.description
-        }}</SectionsText>
+        <p class="w-1/2 text-center mb-10 font-sans">
+            {{ popularDishes.description }}
+        </p>
         <div class="flex justify-between w-1/2 mb-8">
             <DishArticle
                 v-for="(dish, i) of dishes"

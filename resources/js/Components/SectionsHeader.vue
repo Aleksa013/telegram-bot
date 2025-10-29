@@ -16,7 +16,7 @@ const vCapitalizeWords = {
 };
 </script>
 <template>
-    <h4 v-capitalize-words class="w-auto my-3 font-serif text-[3em]">
+    <h4 v-capitalize-words class="w-auto my-3 font-serif ">
         <slot></slot>
     </h4>
 </template>

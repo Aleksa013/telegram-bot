@@ -1,9 +1,7 @@
 <script setup>
-import { ref } from "vue";
-import SectionsHeader from "./SectionsHeader.vue";
-import SectionsText from "./SectionsText.vue";
+import { computed, ref } from "vue";
 
-defineProps({
+const props = defineProps({
     imagePath: String,
     name: String,
     price: String,
@@ -11,17 +9,29 @@ defineProps({
     count: Number,
 });
 
+const convertedPrice = computed(() => {
+    return Number(props.price).toFixed() / 50;
+});
+
 const startPath = ref("http://127.0.0.1:5173/resources/assets/img/images/");
 </script>
 <template>
-    <article v-if="count < 10 && count > 5" class="w-1/5">
+    <article v-if="count < 10 && count > 5" class="w-1/5 mx-3">
         <div
             class="h-[280px] bg-cover bg-no-repeat bg-center"
-            :style="{ backgroundImage: `url(${startPath}${imagePath})` }"
+            :style="{ backgroundImage: `url(${startPath}${props.imagePath})` }"
         ></div>
-        <SectionsHeader class="text-[1rem] border-b-2 border-primary_gray">{{
-            name
-        }}</SectionsHeader>
-        <SectionsText class="text-[0.75rem]">{{ description }}</SectionsText>
+        <div
+            class="flex justify-between items-center w-auto my-3 font-serif border-b-2 border-primary_gray text-[1rem] text-semibold"
+        >
+            <span>
+                {{ props.name }}
+            </span>
+            <span class="text-[1.5rem]">{{ convertedPrice + "BGN" }}</span>
+        </div>
+
+        <p class="text-[0.75rem] w-auto font-sans text-primary_gray">
+            {{ props.description }}
+        </p>
     </article>
 </template>

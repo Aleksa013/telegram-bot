@@ -17,7 +17,7 @@ onMounted(async () => {
 <template>
     <section class="flex flex-col bg-dark_bg p-12">
         <Label class="text-light_bg w-[5rem] py-2">Testimonial</Label>
-        <SectionsHeader class="text-light_bg">
+        <SectionsHeader class="text-light_bg text-[3em]">
             {{ review.header }}
         </SectionsHeader>
         <SectionsText class="text-light_bg">

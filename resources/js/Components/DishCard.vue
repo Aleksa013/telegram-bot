@@ -16,10 +16,10 @@ const props = defineProps({
 </script>
 <template>
     <div class="w-[45%] px-3 py-5 flex flex-col justify-start">
-        <SectionsHeader class="text-dark_bg">{{ props.header }}</SectionsHeader>
-        <SectionsText class="text-primary_gray">
-            {{ props.description }}</SectionsText
-        >
+        <SectionsHeader class="text-dark_bg text-[3em]">{{
+            props.header
+        }}</SectionsHeader>
+        <SectionsText> {{ props.description }}</SectionsText>
         <img :src="props.picturePath" :alt="props.name" class="w-[75%] my-10" />
         <PrimaryButton
             v-if="props.textButton"

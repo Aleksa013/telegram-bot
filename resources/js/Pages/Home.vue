@@ -7,6 +7,7 @@ import ReviewSection from "@/Components/ReviewSection.vue";
 import Vibe from "@/Components/Vibe.vue";
 import { welcome } from "./../constants/constants.json";
 import PopularDishes from "@/Components/PopularDishes.vue";
+import Footer from "@/Components/Footer.vue";
 
 defineProps({
     canLogin: Boolean,
@@ -29,6 +30,7 @@ defineProps({
         <ReviewSection />
         <Vibe />
         <PopularDishes />
+        <Footer />
     </div>
 </template>
 
