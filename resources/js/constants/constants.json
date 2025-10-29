@@ -22,5 +22,10 @@
     },
     "defaultData": {
         "avaPath": "http://127.0.0.1:5173/resources/assets/img/icons/ava_default.png"
+    },
+    "popularDishes": {
+        "header": "Popular Dishes",
+        "description": "There is a game between the waiters in restaurant to see who serves the food to each table fastest. That led to attempting the Guinness Record.",
+        "buttonText": "See all dishes"
     }
 }

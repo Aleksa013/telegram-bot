@@ -1,6 +1,7 @@
 <script setup>
 import { onMounted, ref } from "vue";
 import { defaultData } from "@/constants/constants.json";
+import axios from "axios";
 
 const props = defineProps({
     review: Object,
@@ -15,8 +16,7 @@ onMounted(async () => {
         "http://127.0.0.1:8000/api/user/" + props.review.user_id
     );
     user.value = data;
-    city.value = data.addresses.city;
-    console.log(user.value);
+    city.value = data.addresses ? data.addresses.city : "Your favorite city";
 });
 </script>
 <template>
@@ -34,7 +34,7 @@ onMounted(async () => {
                     user.name
                 }}</span>
                 <p class="font-sans text-primary_orange">
-                    {{ city ?? "Your city" }}
+                    {{ city }}
                 </p>
             </div>
         </div>

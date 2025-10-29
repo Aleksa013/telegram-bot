@@ -6,6 +6,7 @@ import MenuSection from "@/Components/MenuSection.vue";
 import ReviewSection from "@/Components/ReviewSection.vue";
 import Vibe from "@/Components/Vibe.vue";
 import { welcome } from "./../constants/constants.json";
+import PopularDishes from "@/Components/PopularDishes.vue";
 
 defineProps({
     canLogin: Boolean,
@@ -27,6 +28,7 @@ defineProps({
         <MenuSection />
         <ReviewSection />
         <Vibe />
+        <PopularDishes />
     </div>
 </template>
 
