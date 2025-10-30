@@ -18,7 +18,7 @@ onMounted(async () => {
 });
 </script>
 <template>
-    <section class="flex flex-col items-center">
+    <section class="flex flex-col items-center py-10">
         <Label class="w-[5%]">Menu</Label>
         <SectionsHeader class="text-dark_bg text-[3em]">{{
             popularDishes.header

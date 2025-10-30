@@ -5,21 +5,28 @@ import Label from "./Label.vue";
 </script>
 <template>
     <footer class="flex justify-between bg-dark_bg text-light_bg p-16">
-        <div class="flex flex-col">
-            <span class="tag">{{ footer.tag }}</span>
+        <div class="flex flex-col p-3">
+            <span class="tag mx-4 mb-5">{{ footer.tag }}</span>
             <Label>Contact</Label>
-            <span>{{ footer.address }}</span>
-            <span>{{ footer.phone }}</span>
-            <span>{{ footer.email }}</span>
+            <span class="mx-4 mt-5">{{ footer.address }}</span>
+            <span class="mx-4 text-primary_orange">{{ footer.phone }}</span>
+            <span class="mx-4 text-primary_orange">{{ footer.email }}</span>
         </div>
         <div class="flex flex-col">
             <ApplicationLogo />
         </div>
-        <div class="flex flex-col">
-            <Label>Working Hours</Label>
-            <p>Mon – Fri: <span>7.00am – 6.00pm</span></p>
-            <p>Sat: <span>7.00am – 6.00pm</span></p>
-            <p>Sun: <span>8.00am – 6.00pm</span></p>
+        <div class="flex flex-col items-end">
+            <Label class="mt-14 px-10">Working Hours</Label>
+            <p class="text-primary_orange mt-5">
+                Mon – Fri:
+                <span class="text-light_bg">7.00am – 6.00pm</span>
+            </p>
+            <p class="text-primary_orange">
+                Sat: <span class="text-light_bg">7.00am – 6.00pm</span>
+            </p>
+            <p class="text-primary_orange">
+                Sun: <span class="text-light_bg">8.00am – 6.00pm</span>
+            </p>
         </div>
     </footer>
 </template>
