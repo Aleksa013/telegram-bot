@@ -1,5 +1,5 @@
 <script setup>
-import { Head, Link } from "@inertiajs/vue3";
+// import Header from "./../Header.vue";
 import Header from "@/Components/Header.vue";
 import WelcomeSection from "@/Components/WelcomeSection.vue";
 import MenuSection from "@/Components/MenuSection.vue";
@@ -19,7 +19,6 @@ defineProps({
 
 <template>
     <div class="container px-10 py-[1.5rem] max-w-[95%] mx-auto flex flex-col">
-        <Head title="Welcome" />
         <Header />
         <WelcomeSection
             :header="welcome.header"

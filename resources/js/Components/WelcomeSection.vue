@@ -1,6 +1,6 @@
 <script setup lang="js">
 import PrimaryButton from './PrimaryButton.vue';
-import { router } from '@inertiajs/vue3'
+
 const content = defineProps({
     header: String,
     text: String,
@@ -39,11 +39,4 @@ const goToMenu = ()=> {
 .welcome {
     padding: 5% 5% 0;
 }
-/* .picture {
-    width: 50%;
-
-    background-image: url("../../assets/img/images/welcome-bg.png");
-    background-size: cover;
-    background-repeat: no-repeat;
-} */
 </style>

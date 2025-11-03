@@ -2,7 +2,7 @@
 import { ref } from 'vue';
 import PrimaryButton from './PrimaryButton.vue';
 import ApplicationLogo from './ApplicationLogo.vue';
-import {navigation, social} from './../constants/constants.json';
+import {navigation} from './../constants/constants.json';
 import NavigationList from './NavigationList.vue';
 </script>
 <template>

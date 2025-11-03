@@ -1,5 +1,6 @@
 <script setup>
-import { Head, Link } from "@inertiajs/vue3";
+import Header from "@/Components/Header.vue";
+import Footer from "@/Components/Footer.vue";
 
 defineProps({
     canLogin: Boolean,
@@ -11,7 +12,8 @@ defineProps({
 
 <template>
     <container class="px-10 py-[1.5rem] max-w-[95%] mx-auto flex flex-col">
-        <h2>Menu</h2>
+        <Header />
+        <Footer />
     </container>
 </template>
 
