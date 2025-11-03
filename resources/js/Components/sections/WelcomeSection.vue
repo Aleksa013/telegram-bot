@@ -1,5 +1,5 @@
 <script setup lang="js">
-import PrimaryButton from './PrimaryButton.vue';
+import PrimaryButton from './common/PrimaryButton.vue';
 
 const content = defineProps({
     header: String,

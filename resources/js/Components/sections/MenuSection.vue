@@ -4,7 +4,7 @@ import axios from 'axios';
 import DishCard from './DishCard.vue';
 import {menuSection} from './../constants/constants.json';
 import EntityList from './EntityList.vue';
-import Label from './Label.vue';
+import Label from './common/Label.vue';
 
 
 const drinkList = ref([]);

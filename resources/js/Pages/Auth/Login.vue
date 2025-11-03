@@ -1,10 +1,10 @@
 <script setup>
-import Checkbox from "@/Components/Checkbox.vue";
+import Checkbox from "@/Components/common/Checkbox.vue";
 import GuestLayout from "@/Layouts/GuestLayout.vue";
-import InputError from "@/Components/InputError.vue";
-import InputLabel from "@/Components/InputLabel.vue";
-import PrimaryButton from "@/Components/PrimaryButton.vue";
-import TextInput from "@/Components/TextInput.vue";
+import InputError from "@/Components/common/InputError.vue";
+import InputLabel from "@/Components/common/InputLabel.vue";
+import PrimaryButton from "@/Components/common/PrimaryButton.vue";
+import TextInput from "@/Components/common/TextInput.vue";
 
 defineProps({
     canResetPassword: Boolean,

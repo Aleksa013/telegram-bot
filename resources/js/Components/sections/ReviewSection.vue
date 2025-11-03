@@ -5,7 +5,7 @@ import Label from "./Label.vue";
 import SectionsHeader from "./SectionsHeader.vue";
 import { onMounted, ref } from "vue";
 import axios from "axios";
-import SectionsText from "./SectionsText.vue";
+import SectionsText from "./common/SectionsText.vue";
 
 const reviews = ref([]);
 
