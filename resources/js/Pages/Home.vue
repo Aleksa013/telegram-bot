@@ -1,12 +1,10 @@
 <script setup>
-import Header from "@/Components/Header.vue";
-import WelcomeSection from "@/Components/WelcomeSection.vue";
-import MenuSection from "@/Components/MenuSection.vue";
-import ReviewSection from "@/Components/ReviewSection.vue";
+import WelcomeSection from "@/Components/sections/WelcomeSection.vue";
+import MenuSection from "@/Components/sections/MenuSection.vue";
+import ReviewSection from "@/Components/sections/ReviewSection.vue";
 import Vibe from "@/Components/sections/Vibe.vue";
 import { welcome } from "./../constants/constants.json";
-import PopularDishes from "@/Components/PopularDishes.vue";
-import Footer from "@/Components/Footer.vue";
+import PopularDishes from "@/Components/sections/PopularDishes.vue";
 
 defineProps({
     canLogin: Boolean,

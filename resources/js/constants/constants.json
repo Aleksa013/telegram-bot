@@ -33,5 +33,24 @@
         "address": "st Varnenchick, 75015 Varna",
         "phone": "+123 456 789",
         "email": "josefin@mail.com"
+    },
+    "offers": {
+        "title": "What we offer",
+        "header": "Our Great Services",
+        "description": "The atmosphere set the stage. It’s about more than just a dining room away from your home. food takes the spotlight as guests.",
+        "advantages": [
+            {
+                "description": "Opened 24/7",
+                "iconPath": "http://127.0.0.1:5173/resources/assets/img/icons/calendar.png"
+            },
+            {
+                "description": "Special Menus",
+                "iconPath": "http://127.0.0.1:5173/resources/assets/img/icons/menu.png"
+            },
+            {
+                "description": "Home Delivery",
+                "iconPath": "http://127.0.0.1:5173/resources/assets/img/icons/scooter.png"
+            }
+        ]
     }
 }

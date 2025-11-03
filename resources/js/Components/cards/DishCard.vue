@@ -1,7 +1,7 @@
 <script lang="js" setup>
-import PrimaryButton from './common/PrimaryButton.vue';
-import SectionsHeader from './common/SectionsHeader.vue';
-import SectionsText from './common/SectionsText.vue';
+import PrimaryButton from './../common/PrimaryButton.vue';
+import SectionsHeader from './../common/SectionsHeader.vue';
+import SectionsText from './../common/SectionsText.vue';
 
 const props = defineProps({
     header: String,

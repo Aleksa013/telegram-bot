@@ -1,5 +1,5 @@
 <script setup lang="js">
-import PrimaryButton from './common/PrimaryButton.vue';
+import PrimaryButton from './../common/PrimaryButton.vue';
 
 const content = defineProps({
     header: String,
@@ -29,7 +29,7 @@ const goToMenu = ()=> {
             >
         </div>
         <img
-            src="../../assets/img/images/welcome-bg.png"
+            src="./../../../assets/img/images/welcome-bg.png"
             alt="beautiful place"
         />
     </section>

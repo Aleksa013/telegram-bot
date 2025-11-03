@@ -1,5 +1,5 @@
 <script lang="js" setup>
-import ListItem from './cards/ListItem.vue';
+import ListItem from './../cards/ListItem.vue';
 const props = defineProps({
     header: String,
     list: Array,

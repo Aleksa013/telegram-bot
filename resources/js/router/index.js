@@ -5,6 +5,8 @@ import Menu from "@/Pages/Menu.vue";
 const routes = [
     { path: "/", component: Home },
     { path: "/menu", component: Menu },
+    { path: "/about", component: Menu },
+    { path: "/contacts", component: Menu },
 ];
 
 const router = createRouter({

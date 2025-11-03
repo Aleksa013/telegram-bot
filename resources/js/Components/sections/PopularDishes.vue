@@ -1,12 +1,11 @@
 <script setup>
 import { ref } from "vue";
 import axios from "axios";
-import { popularDishes } from "./../constants/constants.json";
-import Label from "./common/Label.vue";
-import SectionsHeader from "./common/SectionsHeader.vue";
-import SectionsText from "./common/SectionsText.vue";
-import PrimaryButton from "./common/PrimaryButton.vue";
-import DishArticle from "./DishArticle.vue";
+import { popularDishes } from "./../../constants/constants.json";
+import Label from "./../common/Label.vue";
+import SectionsHeader from "./../common/SectionsHeader.vue";
+import PrimaryButton from "./../common/PrimaryButton.vue";
+import DishArticle from "./../cards/DishArticle.vue";
 import { onMounted } from "vue";
 
 const dishes = ref([]);

@@ -1,10 +1,10 @@
 <script lang="js" setup>
 import { onMounted, ref } from 'vue';
 import axios from 'axios';
-import DishCard from './DishCard.vue';
-import {menuSection} from './../constants/constants.json';
-import EntityList from './EntityList.vue';
-import Label from './common/Label.vue';
+import DishCard from './../cards/DishCard.vue';
+import {menuSection} from './../../constants/constants.json';
+import EntityList from './../cards/EntityList.vue';
+import Label from './../common/Label.vue';
 
 
 const drinkList = ref([]);

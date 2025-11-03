@@ -1,4 +1,6 @@
 <script setup>
+import Offers from "@/Components/sections/Offers.vue";
+
 defineProps({
     canLogin: Boolean,
     canRegister: Boolean,
@@ -7,4 +9,6 @@ defineProps({
 });
 </script>
 
-<template></template>
+<template>
+    <Offers />
+</template>

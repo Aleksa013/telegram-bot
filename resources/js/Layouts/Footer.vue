@@ -1,7 +1,7 @@
 <script setup>
 import { footer } from "./../constants/constants.json";
-import ApplicationLogo from "./ApplicationLogo.vue";
-import Label from "./Label.vue";
+import ApplicationLogo from "./../Components/ApplicationLogo.vue";
+import Label from "./../Components/common/Label.vue";
 </script>
 <template>
     <footer class="flex justify-between bg-dark_bg text-light_bg p-16">

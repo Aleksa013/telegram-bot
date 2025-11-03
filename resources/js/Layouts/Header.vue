@@ -1,9 +1,9 @@
 <script setup lang="js">
 import { ref } from 'vue';
-import PrimaryButton from './PrimaryButton.vue';
-import ApplicationLogo from './ApplicationLogo.vue';
+import PrimaryButton from './../Components/common/PrimaryButton.vue';
+import ApplicationLogo from './../Components/ApplicationLogo.vue';
 import {navigation} from './../constants/constants.json';
-import NavigationList from './NavigationList.vue';
+import NavigationList from './../Components/cards/NavigationList.vue';
 </script>
 <template>
     <header class="flex flex-wrap justify-around items-center bg-dark_bg">

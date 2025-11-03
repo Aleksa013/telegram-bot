@@ -1,11 +1,11 @@
 <script setup>
-import { review } from "./../constants/constants.json";
-import ReviewItem from "./ReviewItem.vue";
-import Label from "./Label.vue";
-import SectionsHeader from "./SectionsHeader.vue";
+import { review } from "./../../constants/constants.json";
+import ReviewItem from "./../cards/ReviewItem.vue";
+import Label from "./../common/Label.vue";
+import SectionsHeader from "./../common/SectionsHeader.vue";
 import { onMounted, ref } from "vue";
 import axios from "axios";
-import SectionsText from "./common/SectionsText.vue";
+import SectionsText from "./../common/SectionsText.vue";
 
 const reviews = ref([]);
 
