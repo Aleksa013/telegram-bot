@@ -16,9 +16,9 @@ const convertedPrice = computed(() => {
 const startPath = ref("http://127.0.0.1:5173/resources/assets/img/images/");
 </script>
 <template>
-    <article v-if="count < 10 && count > 5" class="w-1/5 mx-3">
+    <article v-if="count < 10 && count > 5" class="w-1/3 mx-3">
         <div
-            class="h-[280px] bg-cover bg-no-repeat bg-center"
+            class="h-[280px] object-cover"
             :style="{ backgroundImage: `url(${startPath}${props.imagePath})` }"
         ></div>
         <div

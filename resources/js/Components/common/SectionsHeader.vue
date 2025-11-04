@@ -1,6 +1,21 @@
 <script setup>
+import { update } from "lodash";
+
 const vCapitalizeWords = {
     mounted(el) {
+        if (el.textContent) {
+            const text = el.textContent
+                .split(" ")
+                .map(
+                    (word) =>
+                        word.charAt(0).toUpperCase() +
+                        word.slice(1).toLowerCase()
+                )
+                .join(" ");
+            el.textContent = text;
+        }
+    },
+    update(el) {
         if (el.textContent) {
             const text = el.textContent
                 .split(" ")
@@ -16,7 +31,7 @@ const vCapitalizeWords = {
 };
 </script>
 <template>
-    <h4 v-capitalize-words class="w-auto my-3 font-serif ">
+    <h4 v-capitalize-words class="w-auto my-3 font-serif">
         <slot></slot>
     </h4>
 </template>
